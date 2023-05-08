@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class EmpleadoController {
     
     @Autowired
-    private RepositoryEmpleado RepositoryEmpleado;
+    private RepositoryEmpleado repositoryEmpleado;
     
     @GetMapping("/msg")
     public String holamundo(){
@@ -71,7 +71,7 @@ public class EmpleadoController {
         empleadopojo.setDireccion(empleadoDTO.getDireccion());
         empleadopojo.setTelefono(empleadoDTO.getTelefono());
         
-        Empleado empleadopojoNew=RepositoryEmpleado.save(empleadopojo);
+        Empleado empleadopojoNew=repositoryEmpleado.save(empleadopojo);
         
         DTOEmpleado empleadoDTONew=new DTOEmpleado();
         empleadoDTONew.setClave(empleadopojoNew.getId());
@@ -82,16 +82,16 @@ public class EmpleadoController {
   }
     //update
     @PutMapping("/empleados/{id}")
-  public DTOEmpleado ModificarEmpleado(@PathVariable("id")Long id,
+  public DTOEmpleado modificarEmpleado(@PathVariable("id")Long id,
           @RequestBody DTOEmpleado empleado){
       
       return empleado;
       
   }
     //delete
-    @DeleteMapping("/empleados")
-    public void borrarEmpleado(@PathVariable("id") Long id){
-        return;
-    }
+    @DeleteMapping("/empleados/{id}")
+  public void borrarEmpleado(@PathVariable("id") Long id){
+        //aqui code smell "return;"
+  }
     
 }
